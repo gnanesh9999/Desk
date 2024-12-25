@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+        .sidebar-logo {
+            display: flex;
+            justify-content: flex-end; /* Align image to the right */
+            margin-bottom: 20px;
+            padding: 10px; /* Add padding around the logo */
+        }
+        .sidebar-logo img {
+            width: 100%; /* Ensure the image takes up the full width of the sidebar */
+            height: auto; /* Adjust the height automatically */
+            border-radius: 10px; /* Keep the rounded corners */
+            object-fit: cover; /* Ensures the image fits properly */
+            border: 2px solid white; /* Optional border for better visuals */
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; /* Remove any default spacing */
+        }
+        .sidebar ul li {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover {
+            background-color: #444;
+        }
+        .sidebar ul li i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        /* Header */
+        .header {
+            margin-left: 200px;
+            background-color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header .search {
+            margin-right: 20px; /* Add margin to separate from logo */
+        }
+        .header input[type="text"] {
+            padding: 5px;
+            font-size: 14px;
+            width: 200px;
+        }
+        .header .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Overview Cards */
+        .overview {
+            margin: 20px 220px 20px 220px; /* Increased top margin slightly to move the boxes down */
+            display: flex;
+            justify-content: space-between; /* Evenly space the cards horizontally */
+            align-items: center; /* Align items to the center vertically */
+        }
+
+        /* Card */
+        .card {
+            background-color: #fff;
+            padding: 15px; /* Padding remains the same */
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 18%; /* Increased width to 18% */
+            box-sizing: border-box;
+            position: relative; /* Set relative positioning */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Aligns content to the bottom of the box */
+            height: 120px; /* Height remains the same */
+        }
+        .card h3 {
+            margin: 0;
+            padding-bottom: 15px; /* Padding remains the same */
+            flex-grow: 1; /* Ensures the title is pushed up */
+        }
+        .card .number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 17px; /* Font size remains the same */
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Student Name Styling */
+        .student-name {
+            position: absolute;
+            bottom: 10px; /* Places the name at the bottom of the box */
+            left: 10px;  /* Aligns the name to the left side */
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Icon for Card */
+        .card i {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: grey; /* Blue color for the icon */
+        }
+
+        /* Table */
+        .content {
+            margin: 20px 220px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .actions {
+            text-align: center;
+        }
+        .actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* Path Text */
+        
+        /* Path Text */
+    .path {
+    margin: 20px 220px 20px 220px; /* Reduced the top margin to 60px */
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+    }
+
+    /* Title for Table */
+    /* Table Title */
+/* Table Title */
+.table-title {
+    margin: 20px 220px 10px 220px; /* Styling for title above the table */
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-bar input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    width: 200px; /* Adjust width of search bar */
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    opacity: 0.8;
+}
+
+
+
+    /* Batch List Title */
+    /* Batch List Title */
+.batch-title {
+    font-size: 18px; /* Decreased the font size */
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 200px;
+    background-color: #f8f8f8;
+    border-top: 4px solid #ddd;
+    border-bottom: 2px solid #ddd;
+    text-transform: uppercase;
+    padding: 200px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="https://tse4.mm.bing.net/th?id=OIP.YNjUMo6qKYRX1VOuanGfRQAAAA&pid=Api&P=0&h=180" alt="VCube Logo">
+        </div>
+        <ul>
+            <li><i class="fas fa-home"></i> Home</li>
+            <li><i class="fas fa-envelope"></i> Enquiries</li>
+            <li><i class="fas fa-phone-alt"></i> Followups</li>
+            <li><i class="fas fa-book"></i> Courses</li>
+            <li><i class="fas fa-calendar-alt"></i> Attendance</li>
+            <li><i class="fas fa-users"></i> Students List</li>
+            <li><i class="fas fa-clock"></i> Class Timings</li>
+            <li><i class="fas fa-user-cog"></i> Users</li>
+            <li><i class="fas fa-desktop"></i> Demos</li>
+            <li><i class="fas fa-credit-card"></i> Payments</li>
+            <li><i class="fas fa-cogs"></i> Settings</li>
+        </ul>
+    </div>
+
+    <div class="header">
+        <div class="search">
+            <input type="text" placeholder="Search..." style="text-align: right;">
+        </div>
+        <div class="logo">
+            <img src="https://up.yimg.com/ib/th?id=OIP.rue1je__rIWweVj-Q0XbbQHaHa&pid=Api&rs=1&c=1&qlt=95&w=121&h=121" alt="Person Logo"> <!-- Right corner -->
+        </div>
+    </div>
+
+    <!-- Path Text -->
+    <div class="path">Home / Courses / Python / Batch 22</div>
+
+    <!-- Table Title -->
+   
+
+    <div class="overview">
+        <div class="card">
+            <i class="fas fa-users"></i> <!-- Student icon -->
+            <div class="number">88</div>
+            <div class="student-name"><h3>Total Students</h3></div> <!-- Example student name -->
+        </div>
+        <div class="card">
+            <i class="fas fa-vial"></i> <!-- Mock Test icon -->
+            <div class="number">19</div>
+            <div class="student-name"><h3>Mock Tests</h3></div> <!-- Example student name -->
+        </div>
+        <div class="card">
+            <i class="fas fa-book-open"></i> <!-- Case Study icon -->
+            <div class="number">22</div>
+            <div class="student-name"><h3>Case Studies</h3></div> <!-- Example student name -->
+        </div>
+        <div class="card">
+            <i class="fas fa-laptop-code"></i> <!-- Mock Interview icon -->
+            <div class="number">4</div>
+            <div class="student-name"><h3>Mock Interviews</h3></div> <!-- Example student name -->
+        </div>
+        <div class="card">
+            <i class="fas fa-tasks"></i> <!-- Assignment icon -->
+            <div class="number">14</div>
+            <div class="student-name"><h3>Assignments</h3></div> 
+        </div>
+    </div>
+
+    <div class="content">
+        <table>
+            <table>
+                <thead>
+                    <tr class="batch-title">
+                        <th colspan="5" style="padding-right: 20px; text-align: left;">Batch 22 Student List</th>
+                        <th colspan="5" style="text-align: left;">
+                            <div style="display: flex; align-items: center;">
+                                <input type="text" placeholder="Search..." style="margin-left: -310px; padding: 5px; width: 50%; display: inline-block;">
+                                <button style="margin-left: 10px; padding: 10px 12px; width: 40%; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    Add Student
+                                </button>
+                                <button style="margin-left: 60px; padding: 10px 12px; width: 40%; background-color: grey; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    Take Attendance
+                                </button>
+                                <button style="margin-left: 90px; padding: 10px 12px; width: 40%; background-color: yellow; color: black; border: none; border-radius: 5px; cursor: pointer;">
+                                    Move to Branch
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                
+            
+                
+                
+            
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Alternate</th>
+                    <th>Email</th>
+                    <th>Joining Date</th>
+                    <th>Next Payment</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>2024-09-01</td>
+                    <td>Pending</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>2024-09-01</td>
+                    <td>Pending</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>2024-09-01</td>
+                    <td>Pending</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>0987654321</td>
+                    <td>johndoe@example.com</td>
+                    <td>2024-01-15</td>
+                    <td>-</td>
+                    <td>Paid</td>
+                    <td class="actions" style="text-align: center;">
+                        <button class="btn-secondary" style="background-color: #007bff; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            &#x22EE; <!-- Unicode character for vertical ellipsis -->
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html> 
